@@ -46,6 +46,10 @@ const DiffPage: React.FC = () => {
   return (
     <Grid container spacing={2}>
       <Grid item xs={12}>
+        <Typography variant="h5">
+          IF FOLLOWER/FOLLOWING COUNTS ARE INCORRECT BLAME INSTAGRAM AND DO NOT
+          TRUST RESULTS
+        </Typography>
         <Typography>
           1. Go to your Instagram profile and open your followers.
         </Typography>
@@ -90,7 +94,7 @@ const DiffPage: React.FC = () => {
       </Grid>
       <Grid item xs={6}>
         <List>
-          {leftList.length - 1}
+          {leftList.length > 0 && leftList.length - 1}
           {followers.map((item) => (
             <ListItem key={item}>
               <ListItemText primary={item} />
@@ -100,7 +104,7 @@ const DiffPage: React.FC = () => {
       </Grid>
       <Grid item xs={6}>
         <List>
-          {rightList.length - 1}
+          {rightList.length > 0 && rightList.length - 1}
           {following.map((item) => (
             <ListItem key={item}>
               <ListItemText primary={item} />
