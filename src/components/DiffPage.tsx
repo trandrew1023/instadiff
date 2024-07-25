@@ -12,6 +12,8 @@ import {
 const DiffPage: React.FC = () => {
   const [leftInput, setLeftInput] = useState('');
   const [rightInput, setRightInput] = useState('');
+  const [leftList, setLeftList] = useState<string[]>([]);
+  const [rightList, setRightList] = useState<string[]>([]);
   const [followers, setFollowers] = useState<string[]>([]);
   const [following, setFollowing] = useState<string[]>([]);
 
@@ -31,8 +33,8 @@ const DiffPage: React.FC = () => {
   const handleProcessClick = () => {
     const followersList = extractUsernames(leftInput);
     const followingList = extractUsernames(rightInput);
-    setLeftInput('');
-    setRightInput('');
+    setLeftList(followersList);
+    setRightList(followingList);
     setFollowers(
       followersList.filter((item) => followingList.indexOf(item) < 0)
     );
@@ -49,11 +51,13 @@ const DiffPage: React.FC = () => {
         </Typography>
         <Typography>2. Scroll and load all of your followers.</Typography>
         <Typography>
-          3. Select (CTRL/CMD + a) and copy (CTRL/CMD) + c all the text to
-          include your followers.
+          3. Select all your followers (CTRL/CMD + a on the ENTIRE page) and
+          copy (CTRL/CMD + c) everything.
         </Typography>
-        <Typography>4. Paste (CTRL/CMD + v) into the Followers box.</Typography>
-        <Typography>5. Repeat for following</Typography>
+        <Typography>
+          4. Paste everything (CTRL/CMD + v) into the `Followers` box.
+        </Typography>
+        <Typography>5. Repeat for `Following`</Typography>
       </Grid>
       <Grid item xs={6}>
         <TextareaAutosize
@@ -86,6 +90,7 @@ const DiffPage: React.FC = () => {
       </Grid>
       <Grid item xs={6}>
         <List>
+          {leftList.length - 1}
           {followers.map((item) => (
             <ListItem key={item}>
               <ListItemText primary={item} />
@@ -95,6 +100,7 @@ const DiffPage: React.FC = () => {
       </Grid>
       <Grid item xs={6}>
         <List>
+          {rightList.length - 1}
           {following.map((item) => (
             <ListItem key={item}>
               <ListItemText primary={item} />
