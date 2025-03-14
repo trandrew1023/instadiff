@@ -18,16 +18,19 @@ const DiffPage: React.FC = () => {
   const [following, setFollowing] = useState<string[]>([]);
 
   function extractUsernames(inputText: string): string[] {
-    const lines = inputText.split(/\r?\n/);
-    const usernames: string[] = [];
+    let lines = inputText.split(/\r?\n/);
+    // Find the index of the last occurrence of "Search"
+    const lastSearchIndex = lines
+      .map((line, index) => (line.includes('Search') ? index : -1))
+      .filter((index) => index !== -1)
+      .pop();
+    // Get all lines starting after the last "Search" line
+    lines =
+      lastSearchIndex !== undefined ? lines.slice(lastSearchIndex + 1) : [];
+    // Filter out lines containing "·"
+    lines = lines.filter((line) => !line.includes('·'));
 
-    for (let i = 0; i < lines.length; i++) {
-      if (lines[i].includes('profile picture')) {
-        usernames.push(lines[i + 1]);
-      }
-    }
-
-    return usernames;
+    return lines;
   }
 
   const handleProcessClick = () => {
